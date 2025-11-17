@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Grammar Test</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .form-section {
+            padding: 40px;
+        }
+        
+        .student-info {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .question-block {
+            background: #f8f9fa;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .question-number {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .question-text {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+        
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 12px 15px;
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .option.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 20px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .timer {
+            text-align: center;
+            font-size: 1.1em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2em;
+            color: #667eea;
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 40px;
+            color: #27ae60;
+            font-size: 1.3em;
+        }
+        
+        .error-message {
+            text-align: center;
+            padding: 20px;
+            color: #e74c3c;
+            background: #fdf2f2;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>English Grammar Test</h1>
+            <p>Test your knowledge of Prepositions of Time + How much/How many</p>
+        </div>
+        
+        <div class="form-section">
+            <div id="studentInfoForm">
+                <div class="student-info">
+                    <h2>Student Information</h2>
+                    <div class="form-group">
+                        <label for="studentName">Full Name:</label>
+                        <input type="text" id="studentName" placeholder="Enter your full name" required>
+                    </div>
+                    <button class="submit-btn" onclick="startTest()">Start Test</button>
+                </div>
+            </div>
+            
+            <div id="testForm" class="hidden">
+                <div class="timer" id="timer">
+                    Time spent: <span id="timeDisplay">00:00</span>
+                </div>
+                
+                <h2 class="section-title">Part 1: Prepositions of Time (20 questions)</h2>
+                <div id="prepositionsQuestions">
+                    <!-- Questions 1-20 will be generated here -->
+                </div>
+                
+                <h2 class="section-title">Part 2: How much / How many / A lot of (5 questions)</h2>
+                <div id="quantifiersQuestions">
+                    <!-- Questions 21-25 will be generated here -->
+                </div>
+                
+                <button class="submit-btn" onclick="submitTest()">Submit Test</button>
+                <div id="errorMessage" class="error-message hidden"></div>
+            </div>
+            
+            <div id="loading" class="loading hidden">
+                <p>Submitting your test... Please wait.</p>
+            </div>
+            
+            <div id="successMessage" class="success-message hidden">
+                <p>Test submitted successfully! Thank you.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let startTime;
+        let timerInterval;
+        const testData = {
+            name: "",
+            timeSpent: "",
+            answers: {},
+            startTime: null
+        };
+
+        const questions = [
+            // Part 1: Prepositions of Time (1-20)
+            { id: 1, question: "I go to school _______ Monday.", options: ["in", "on", "at", "X"], correct: "on", section: "prepositions" },
+            { id: 2, question: "The movie starts _______ 7 PM.", options: ["in", "on", "at", "X"], correct: "at", section: "prepositions" },
+            { id: 3, question: "The leaves fall _______ autumn.", options: ["in", "on", "at", "X"], correct: "in", section: "prepositions" },
+            { id: 4, question: "We eat dinner _______ the evening.", options: ["in", "on", "at", "X"], correct: "in", section: "prepositions" },
+            { id: 5, question: "I will see you _______ Friday.", options: ["in", "on", "at", "X"], correct: "on", section: "prepositions" },
+            { id: 6, question: "She was born _______ 2010.", options: ["in", "on", "at", "X"], correct: "in", section: "prepositions" },
+            { id: 7, question: "Let's play _______ the weekend.", options: ["in", "on", "at", "X"], correct: "at", section: "prepositions" },
+            { id: 8, question: "I have a doctor's appointment _______ Tuesday morning.", options: ["in", "on", "at", "X"], correct: "on", section: "prepositions" },
+            { id: 9, question: "Do you work _______ Saturdays?", options: ["in", "on", "at", "X"], correct: "on", section: "prepositions" },
+            { id: 10, question: "The shop is closed _______ Christmas Day.", options: ["in", "on", "at", "X"], correct: "on", section: "prepositions" },
+            { id: 11, question: "I get up _______ sunrise.", options: ["in", "on", "at", "X"], correct: "at", section: "prepositions" },
+            { id: 12, question: "My birthday is _______ June.", options: ["in", "on", "at", "X"], correct: "in", section: "prepositions" },
+            { id: 13, question: "Please call me _______ lunchtime.", options: ["in", "on", "at", "X"], correct: "at", section: "prepositions" },
+            { id: 14, question: "We never have class _______ the afternoon.", options: ["in", "on", "at", "X"], correct: "in", section: "prepositions" },
+            { id: 15, question: "Where were you _______ last night?", options: ["in", "on", "at", "X"], correct: "X", section: "prepositions" },
+            { id: 16, question: "The concert is _______ March 15th.", options: ["in", "on", "at", "X"], correct: "on", section: "prepositions" },
+            { id: 17, question: "I finished my homework _______ an hour.", options: ["in", "on", "at", "X"], correct: "X", section: "prepositions" },
+            { id: 18, question: "We usually go to the beach _______ summer.", options: ["in", "on", "at", "X"], correct: "in", section: "prepositions" },
+            { id: 19, question: "I'll be ready _______ a moment.", options: ["in", "on", "at", "X"], correct: "in", section: "prepositions" },
+            { id: 20, question: "The train arrives _______ night.", options: ["in", "on", "at", "X"], correct: "at", section: "prepositions" },
+            
+            // Part 2: Quantifiers (21-25)
+            { id: 21, question: "How _______ students are in the classroom?", options: ["much", "many"], correct: "many", section: "quantifiers" },
+            { id: 22, question: "I don't have _______ money.", options: ["many", "much"], correct: "much", section: "quantifiers" },
+            { id: 23, question: "She has _______ friends.", options: ["a lot of", "many"], correct: "a lot of", section: "quantifiers" },
+            { id: 24, question: "How _______ water did you drink?", options: ["much", "many"], correct: "much", section: "quantifiers" },
+            { id: 25, question: "There are too _______ cars on the road.", options: ["much", "many"], correct: "many", section: "quantifiers" }
+        ];
+
+        function startTest() {
+            const name = document.getElementById('studentName').value.trim();
+            if (!name) {
+                alert('Please enter your name');
+                return;
+            }
+            
+            testData.name = name;
+            testData.startTime = new Date();
+            
+            document.getElementById('studentInfoForm').classList.add('hidden');
+            document.getElementById('testForm').classList.remove('hidden');
+            
+            renderQuestions();
+            startTimer();
+        }
+
+        function renderQuestions() {
+            const prepositionsContainer = document.getElementById('prepositionsQuestions');
+            const quantifiersContainer = document.getElementById('quantifiersQuestions');
+            
+            questions.forEach(q => {
+                const container = q.section === 'prepositions' ? prepositionsContainer : quantifiersContainer;
+                const questionHTML = `
+                    <div class="question-block">
+                        <div class="question-number">Question ${q.id}</div>
+                        <div class="question-text">${q.question}</div>
+                        <div class="options">
+                            ${q.options.map(opt => `
+                                <div class="option" onclick="selectOption(${q.id}, '${opt}')">
+                                    ${opt}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+        }
+
+        function selectOption(questionId, option) {
+            testData.answers[questionId] = option;
+            
+            // Update UI
+            const questionBlock = document.querySelector(`#testForm .question-block:nth-child(${questionId <= 20 ? questionId : questionId - 19})`);
+            const options = questionBlock.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+                if (opt.textContent.trim() === option) {
+                    opt.classList.add('selected');
+                }
+            });
+        }
+
+        function startTimer() {
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const seconds = (elapsed % 60).toString().padStart(2, '0');
+            document.getElementById('timeDisplay').textContent = `${minutes}:${seconds}`;
+            testData.timeSpent = `${minutes}:${seconds}`;
+        }
+
+        function submitTest() {
+            const totalQuestions = questions.length;
+            const answeredQuestions = Object.keys(testData.answers).length;
+            
+            if (answeredQuestions < totalQuestions) {
+                document.getElementById('errorMessage').textContent = 
+                    `Please answer all questions. You have answered ${answeredQuestions} out of ${totalQuestions} questions.`;
+                document.getElementById('errorMessage').classList.remove('hidden');
+                return;
+            }
+            
+            document.getElementById('errorMessage').classList.add('hidden');
+            document.getElementById('testForm').classList.add('hidden');
+            document.getElementById('loading').classList.remove('hidden');
+            
+            clearInterval(timerInterval);
+            
+            // Calculate results
+            const results = calculateResults();
+            const submissionData = {
+                ...testData,
+                results: results,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Send to backend
+            fetch('/api/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(submissionData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('successMessage').classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('errorMessage').textContent = 'Error submitting test. Please try again.';
+                document.getElementById('errorMessage').classList.remove('hidden');
+            });
+        }
+
+        function calculateResults() {
+            let correct = 0;
+            const questionResults = [];
+            
+            questions.forEach(q => {
+                const userAnswer = testData.answers[q.id];
+                const isCorrect = userAnswer === q.correct;
+                if (isCorrect) correct++;
+                
+                questionResults.push({
+                    question: q.question,
+                    userAnswer: userAnswer,
+                    correctAnswer: q.correct,
+                    isCorrect: isCorrect
+                });
+            });
+            
+            return {
+                score: correct,
+                total: questions.length,
+                percentage: Math.round((correct / questions.length) * 100),
+                details: questionResults
+            };
+        }
+    </script>
+</body>
+</html>
